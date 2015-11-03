@@ -9,7 +9,9 @@ import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
-import mynamespace.*;
+import com.oracle.xmlns.internal.webservices.jaxws_databinding.ObjectFactory;
+
+import candy.*;
 
 @SuppressWarnings("serial")
 public class StAXParser extends XMLStreamException {
@@ -18,9 +20,9 @@ public class StAXParser extends XMLStreamException {
 	private XMLStreamReader reader = null;
 	
 	private static final ObjectFactory factory = new ObjectFactory();
-	private Candy candyCollection = null;
-	private CandyType curCandy = null;
-	private Ingredients ingredients = null;
+	private CandyCollection candyCollection = null;
+	private Candy curCandy = null;
+	private Ingridients ingredients = null;
 	private Value value = null;
 
 	public StAXParser(String filename) {
@@ -50,70 +52,82 @@ public class StAXParser extends XMLStreamException {
 				switch (event) {
 				case XMLStreamConstants.START_ELEMENT:
 
-					if ("Candy".equals(reader.getLocalName())) {
-						candyCollection = factory.createCandy();
+					if ("collection".equals(reader.getLocalName())) {
+						
+						candyCollection = new CandyCollection();
+					
 					} else if ("candy".equals(reader.getLocalName())) {
-						curCandy = factory.createCandyType();
-						curCandy.setProduction(reader.getAttributeValue(0));
-						candyCollection.getCandy().add(curCandy);
+						
+						curCandy = new Candy();
+						curCandy.setType(Type.valueOf(reader.getAttributeValue(0)));
+						curCandy.setId(reader.getAttributeValue(1));
+						candyCollection.add(curCandy);
 					}
 					else if ("name".equals(reader.getLocalName())) {
+						
 						String info = new String(reader.getElementText().trim());
 						curCandy.setName(info);
+						
 					} else if ("energy".equals(reader.getLocalName())) {
+						
 						String info = new String(reader.getElementText().trim());
-						curCandy.setEnergy(info);
-					} else if ("type".equals(reader.getLocalName())) {
+						curCandy.setEnergy(Integer.parseInt(info));
+						
+					} else if ("production".equals(reader.getLocalName())) {
+						
 						String info = new String(reader.getElementText().trim());
-						curCandy.setType(Type.valueOf(info));
-					} else if ("ingredients".equals(reader.getLocalName())) {
-						ingredients = factory.createIngredients();
-						curCandy.setIngredients(ingredients);
+						curCandy.setProduction(info);
+						
+					} else if ("ingridients".equals(reader.getLocalName())) {
+						
+						ingredients = new Ingridients();
+						curCandy.setIngridients(ingredients);
+						
 					} else if ("water".equals(reader.getLocalName())) {
+						
 						String info = new String(reader.getElementText().trim());
-						BigDecimal water = new BigDecimal(info.replaceAll(",",
-								""));
+						int water = Integer.parseInt(info);
 						ingredients.setWater(water);
+						
 					} else if ("sugar".equals(reader.getLocalName())) {
+						
 						String info = new String(reader.getElementText().trim());
-						BigDecimal sugar = new BigDecimal(info.replaceAll(",",
-								""));
+						int sugar = Integer.parseInt(info);
 						ingredients.setSugar(sugar);
+						
 					} else if ("fructose".equals(reader.getLocalName())) {
+						
 						String info = new String(reader.getElementText().trim());
-						BigDecimal fructose = new BigDecimal(info.replaceAll(
-								",", ""));
+						int fructose = Integer.parseInt(info);
 						ingredients.setFructose(fructose);
-					} else if ("chocType".equals(reader.getLocalName())) {
-						String info = new String(reader.getElementText().trim());
-						ingredients.setChocType(info);
-					} else if ("vanillin".equals(reader.getLocalName())) {
-						String info = new String(reader.getElementText().trim());
-						BigDecimal vanillin = new BigDecimal(info.replaceAll(
-								",", ""));
-						ingredients.setVanillin(vanillin);
+						
 					} else if ("value".equals(reader.getLocalName())) {
-						value = factory.createValue();
+						
+						value = new Value();
 						curCandy.setValue(value);
-					} else if ("proteins".equals(reader.getLocalName())) {
+						
+					} else if ("protein".equals(reader.getLocalName())) {
+						
 						String info = new String(reader.getElementText().trim());
-						BigDecimal proteins = new BigDecimal(info.replaceAll(
-								",", ""));
+						int proteins = Integer.parseInt(info);
 						value.setProteins(proteins);
-					} else if ("fats".equals(reader.getLocalName())) {
+						
+					} else if ("fat".equals(reader.getLocalName())) {
+						
 						String info = new String(reader.getElementText().trim());
-						BigDecimal fats = new BigDecimal(info.replaceAll(",",
-								""));
+						int fats =Integer.parseInt(info);
 						value.setFats(fats);
-					} else if ("carbohydrates".equals(reader.getLocalName())) {
+						
+					} else if ("carbohydrate".equals(reader.getLocalName())) {
+						
 						String info = new String(reader.getElementText().trim());
-						BigDecimal carbohydrates = new BigDecimal(
-								info.replaceAll(",", ""));
+						int carbohydrates = Integer.parseInt(info);
 						value.setCarbohydrates(carbohydrates);
+						
 					}
 					break;
 				case XMLStreamConstants.START_DOCUMENT:
-					candyCollection = factory.createCandy();
+					candyCollection = new CandyCollection();
 					break;
 				}
 			}
@@ -122,7 +136,7 @@ public class StAXParser extends XMLStreamException {
 		}
 	}
 	
-	public Candy getCandyCollection() {
+	public CandyCollection getCandyCollection() {
 		return candyCollection;
 	}
 

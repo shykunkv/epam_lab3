@@ -1,56 +1,48 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema"
-	targetNamespace="myNamespace"
-	xmlns:tns="myNamespace">
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-	<element name="Candy">
-		<complexType>
-			<sequence>
-				<element name="candy" type="tns:CandyType" minOccurs="1" maxOccurs="unbounded" />
-			</sequence>
-		</complexType>
-	</element>
+<xs:element name='collection'>
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element name='candy' type='CandyType' minOccurs='0' maxOccurs='unbounded' />
+		</xs:sequence>
+	</xs:complexType>	
+</xs:element>
 
-	<complexType name="CandyType">
-		<sequence>
-			<element name="name" type="tns:Name" />
-			<element name="energy" type="string" />
-			<element name="type" type="tns:Type" />
-			<element name="ingredients" type="tns:Ingredients" />
-			<element name="value" type="tns:Value" />
-		</sequence>
-		<attribute name="production" type="string" />
-	</complexType>
+<xs:complexType name="CandyType">
+	<xs:sequence>
+		<xs:element name="name" type="xs:string"/>
+		<xs:element name="production" type="xs:string"/>
+		<xs:element name="energy" type="xs:positiveInteger"/>
+		<xs:element name="ingridients" type="IngridientsType"/>
+		<xs:element name="value" type="ValueType"/>
+	</xs:sequence>
+	<xs:attribute name='type' type='EnumType'/>
+	<xs:attribute name='id' type='xs:ID'/>
+</xs:complexType>	
 
-	<simpleType name="Name">
-		<restriction base="ID">
-			<pattern value="[a-zA-Z]{3}[a-zA-Z0-9_]+" />
-		</restriction>
-	</simpleType>
+<xs:simpleType name="EnumType">
+  <xs:restriction base="xs:string">
+    <xs:enumeration value="TYPE1" />
+    <xs:enumeration value="TYPE2" />
+    <xs:enumeration value="TYPE3" />
+  </xs:restriction>
+</xs:simpleType>
 
-	<simpleType name="Type">
-		<restriction base="string">
-			<enumeration value="CARAMEL" />
-			<enumeration value="IRIS" />
-			<enumeration value="CHOCWITHSTUF" />
-			<enumeration value="CHOCWITHOUTSTUF" />
-		</restriction>
-	</simpleType>
+<xs:complexType name="IngridientsType">
+	<xs:sequence>
+		<xs:element name="water" type="xs:positiveInteger"/>
+		<xs:element name="sugar" type="xs:positiveInteger"/>
+		<xs:element name="fructose" type="xs:positiveInteger"/>
+	</xs:sequence>
+</xs:complexType>	
 
-	<complexType name="Ingredients">
-		<sequence>
-			<element name="water" type="decimal" />
-			<element name="sugar" type="decimal" />
-			<element name="fructose" type="decimal" />
-		</sequence>
-	</complexType>
+<xs:complexType name="ValueType">
+	<xs:sequence>
+		<xs:element name="protein" type="xs:positiveInteger"/>
+		<xs:element name="fat" type="xs:positiveInteger"/>
+		<xs:element name="carbohydrate" type="xs:positiveInteger"/>
+	</xs:sequence>
+</xs:complexType>
 
-	<complexType name="Value">
-		<sequence>
-			<element name="proteins" type="decimal" />
-			<element name="fats" type="decimal" />
-			<element name="carbohydrates" type="decimal" />
-		</sequence>
-	</complexType>
-
-</schema>
+</xs:schema>

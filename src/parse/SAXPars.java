@@ -9,25 +9,26 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
-import mynamespace.*;
+import candy.*;
 
 public class SAXPars {
 	
 	private String filename = null;
-	private Candy candyCollection = null;
+	private CandyCollection candyCollection = null;
+	
 	public SAXPars(String filename) {
 		this.filename = filename;
 	}
 	
 	public void parse() {
         try {
-            SAXParserFactory spf = SAXParserFactory.newInstance();
-            spf.setNamespaceAware(true);
+            SAXParserFactory saxParseFactory = SAXParserFactory.newInstance();
+            saxParseFactory.setNamespaceAware(true);
             
-            SAXParser saxParser = spf.newSAXParser();
+            SAXParser saxParser = saxParseFactory.newSAXParser();
             XMLReader reader = saxParser.getXMLReader();
             
-            SAXParsH handler = new SAXParsH(filename);
+            SAXParsHandle handler = new SAXParsHandle(filename);
             reader.setContentHandler(handler);
             reader.parse(filename);
             candyCollection = handler.getCandyCollection();
@@ -44,7 +45,7 @@ public class SAXPars {
         }
     }
 	
-	public Candy getCandyCollection() {
+	public CandyCollection getCandyCollection() {
 		return candyCollection;
 	}
 }

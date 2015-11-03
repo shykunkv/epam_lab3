@@ -2,43 +2,42 @@ package parse;
 
 import java.util.Collections;
 import java.util.List;
-
-import mynamespace.*;
+import candy.*;
 
 public class Main {
 
 	public static void main(String[] args) {
-		String filenameXML = "Candy.xml";
-		String filenameXSD = "Candy.xsd";
-		String filenameXSL = "CandyXSL.xsl";
-		CheckXML check = new CheckXML(filenameXML, filenameXSD);
-		if (check.check()) {
-			System.out.println("Checking XML completed successfully");
-		} else
-			System.out.println("Checking XML failed");
+		String XML = "src/Candy.xml";
+		String XSD = "src/Candy.xsd";
+		String XSL = "src/Candy.xsl";
 		
-		/*DOMParser dom = new DOMParser(filenameXML);
-		dom.parse();
-		Candy candy = dom.getCandyCollection();*/
-		//candy.print();
+//		Validate validate = new Validate(filenameXML, filenameXSD);
+//		
+//		if (validate.isValid()) {
+//			System.out.println("XML is valid with this XSD");
+//		} else
+//			System.out.println("ERROR: XML is invalid");
 		
-		SAXPars sax = new SAXPars(filenameXML);
-		sax.parse();
-		//Candy candy = sax.getCandyCollection();
-		//candy.print();
+		//DOMParser dom = new DOMParser(filenameXML);
+		//dom.parse();
+		//CandyCollection candyCollection = dom.getCandyCollection();
+		//System.out.println(candyCollection.toString());
 		
-		/*StAXParser stax = new StAXParser(filenameXML);
-		stax.parse();
-		Candy candy = stax.getCandyCollection();*/
-		//candy.print();
+//		SAXPars sax = new SAXPars(filenameXML);
+//		sax.parse();
+//		CandyCollection candyCollection = sax.getCandyCollection();
+//		System.out.println(candyCollection.toString());
+		
+//		StAXParser stax = new StAXParser(filenameXML);
+//		stax.parse();
+//		CandyCollection candyCollection = stax.getCandyCollection();
+//		System.out.println(candyCollection.toString());
 		
 		/*Sorts the array list using comparator*/
-		/*List<CandyType> list = candy.getCandy();
-		Collections.sort(list, new CandyType());
-		for (CandyType c : list)
-			c.print();*/
+		//Collections.sort(candyCollection.getCandyList());
+		//System.out.println(candyCollection.toString());
 		
-		XMLtoHTML html = new XMLtoHTML("CandyXML.xml", filenameXSL);
+		XMLtoHTML html = new XMLtoHTML(XML, XSL);
 		html.transform();
 
 	}

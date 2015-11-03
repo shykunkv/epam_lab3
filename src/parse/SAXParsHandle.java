@@ -1,19 +1,19 @@
 package parse;
 
 import java.math.BigDecimal;
-
-import org.xml.sax.helpers.DefaultHandler; 
+import org.xml.sax.helpers.DefaultHandler;
+import com.oracle.xmlns.internal.webservices.jaxws_databinding.ObjectFactory;
 import org.xml.sax.*; 
-
-import mynamespace.*;
+import candy.*;
 
 public class SAXParsHandle extends DefaultHandler {
+	
 	String filename = null;
 	String thisElement = "";
 	private static final ObjectFactory factory = new ObjectFactory();
-	private CandyType curCandy = null;
-	private Candy candyCollection = null;
-	private Ingredients ingredients = null;
+	private Candy curCandy = null;
+	private CandyCollection candyCollection = null;
+	private Ingridients ingredients = null;
 	private Value value = null;
 
 	public SAXParsHandle(String filename) {
@@ -24,86 +24,76 @@ public class SAXParsHandle extends DefaultHandler {
 	public void startDocument() throws SAXException {}
 
 	@Override
-	public void startElement(String namespaceURI, String localName,
-			String qName, Attributes atts) throws SAXException {
+	public void startElement(String namespaceURI, String localName, String qName, Attributes atts) throws SAXException {
 		thisElement = qName;
-		if ("tns:Candy".equals(qName)) {
-			candyCollection = factory.createCandy();
+		if ("collection".equals(qName)) {
+			candyCollection = new CandyCollection();
 		} else if ("candy".equals(qName)) {
-			curCandy = factory.createCandyType();
-			curCandy.setProduction(atts.getValue("production"));
+			curCandy = new Candy();
+			curCandy.setId(atts.getValue("id"));
+			curCandy.setType(Type.valueOf(atts.getValue("type")));
 		}
 	}
 
 	@Override
-	public void endElement(String namespaceURI, String localName, String qName)
-			throws SAXException {
+	public void endElement(String namespaceURI, String localName, String qName) throws SAXException {
 		thisElement = "";
 	}
 
 	@Override
-	public void characters(char[] ch, int start, int length)
-			throws SAXException {
+	public void characters(char[] ch, int start, int length) throws SAXException {
+		
 		if (thisElement.equals("name")) {
 			String info = new String(ch, start, length).trim();
 			curCandy.setName(info);
 		}
 		if (thisElement.equals("energy")) {
 			String info = new String(ch, start, length).trim();
-			curCandy.setEnergy(info);
+			curCandy.setEnergy(Integer.parseInt(info));
 		}
-		if (thisElement.equals("type")) {
+		if (thisElement.equals("production")) {
 			String info = new String(ch, start, length).trim();
-			curCandy.setType(Type.valueOf(info));
+			curCandy.setProduction(info);
 		}
-		if (thisElement.equals("ingredients")) {
-			ingredients = factory.createIngredients();
-			curCandy.setIngredients(ingredients);
+		if (thisElement.equals("ingridients")) {
+			ingredients = new Ingridients();
+			curCandy.setIngridients(ingredients);
 		}
 		if (thisElement.equals("water")) {
 			String info = new String(ch, start, length).trim();
-			BigDecimal water = new BigDecimal(info.replaceAll(",", ""));
+			int water = Integer.parseInt(info);
 			ingredients.setWater(water);
 		}
 		if (thisElement.equals("sugar")) {
 			String info = new String(ch, start, length).trim();
-			BigDecimal sugar = new BigDecimal(info.replaceAll(",", ""));
+			int sugar = Integer.parseInt(info);
 			ingredients.setSugar(sugar);
 		}
 		if (thisElement.equals("fructose")) {
 			String info = new String(ch, start, length).trim();
-			BigDecimal fructose = new BigDecimal(info.replaceAll(",", ""));
+			int fructose = Integer.parseInt(info);
 			ingredients.setFructose(fructose);
 		}
-		if (thisElement.equals("chocType")) {
-			String info = new String(ch, start, length).trim();
-			ingredients.setChocType(info);
-		}
-		if (thisElement.equals("vanillin")) {
-			String info = new String(ch, start, length).trim();
-			BigDecimal vanillin = new BigDecimal(info.replaceAll(",", ""));
-			ingredients.setVanillin(vanillin);
-		}
 		if (thisElement.equals("value")) {
-			value = factory.createValue();
+			value = new Value();
 			curCandy.setValue(value);
 		}
-		if (thisElement.equals("proteins")) {
+		if (thisElement.equals("protein")) {
 			String info = new String(ch, start, length).trim();
-			BigDecimal proteins = new BigDecimal(info.replaceAll(",", ""));
+			int proteins = Integer.parseInt(info);
 			value.setProteins(proteins);
 		}
-		if (thisElement.equals("fats")) {
+		if (thisElement.equals("fat")) {
 			String info = new String(ch, start, length).trim();
-			BigDecimal fats = new BigDecimal(info.replaceAll(",", ""));
+			int fats = Integer.parseInt(info);
 			value.setFats(fats);
 		}
-		if (thisElement.equals("carbohydrates")) {
+		if (thisElement.equals("carbohydrate")) {
 			String info = new String(ch, start, length).trim();
-			BigDecimal carbohydrates = new BigDecimal(info.replaceAll(",", ""));
+			int carbohydrates = Integer.parseInt(info);
 			value.setCarbohydrates(carbohydrates);
 			
-			candyCollection.getCandy().add(curCandy);
+			candyCollection.add(curCandy);
 		}
 	}
 
@@ -114,7 +104,7 @@ public class SAXParsHandle extends DefaultHandler {
 		value = null;
 	}
 
-	public Candy getCandyCollection() {
+	public CandyCollection getCandyCollection() {
 		return candyCollection;
 	}
 

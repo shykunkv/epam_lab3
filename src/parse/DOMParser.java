@@ -13,28 +13,32 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import mynamespace.*;
+import com.oracle.xmlns.internal.webservices.jaxws_databinding.ObjectFactory;
+
+import candy.*;
+
 
 public class DOMParser {
 	 
-    private DocumentBuilderFactory docFactory = null;
-    private DocumentBuilder docBuilder = null;
-    private Document doc = null;
-    private String filename = null;
+    private DocumentBuilderFactory documentBuilderFactory = null;
+    private DocumentBuilder documentBuilder = null;
+    private Document document = null;
+    private String fileName = null;
     
     private static final ObjectFactory factory = new ObjectFactory();
-    private Candy candyCollection = null;
+    private CandyCollection candyCollection = null;
      
-    public DOMParser(String filename) {
-    	this.filename = new String(filename);
+    public DOMParser(String fileName) {
+    	this.fileName = new String(fileName);
     }
+    
     
     public void parse() {
     	try {
-            docFactory = DocumentBuilderFactory.newInstance();    
-            docBuilder = docFactory.newDocumentBuilder();
-            doc = docBuilder.parse(filename); 
-            candyCollection = new Candy();
+            documentBuilderFactory = DocumentBuilderFactory.newInstance();    
+            documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            document = documentBuilder.parse(fileName); 
+            candyCollection = new CandyCollection();
             analysis();         
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
@@ -46,75 +50,66 @@ public class DOMParser {
     }
     
 	private void analysis() {
-		NodeList candyList = doc.getElementsByTagName("candy");
+		
+		NodeList candyList = document.getElementsByTagName("candy");
+		
 		for (int i = 0; i < candyList.getLength(); i++) {
-			Node c = candyList.item(i);
-			if (c.getNodeType() == Node.ELEMENT_NODE) {
-				Element candy = (Element) c;
-				CandyType candyType = factory.createCandyType();
-				candyType.setProduction(candy.getAttribute("production"));
+			Node curCandy = candyList.item(i);
+			if (curCandy.getNodeType() == Node.ELEMENT_NODE) {
+				Element candy = (Element) curCandy;
+				Candy candyType = new Candy();
+				candyType.setType(Type.valueOf(candy.getAttribute("type")));
+				candyType.setId(candy.getAttribute("id"));
 				NodeList featureList = candy.getChildNodes();
 				for (int j = 0; j < featureList.getLength(); j++) {
 					Node f = featureList.item(j);
 					if (f.getNodeType() == Node.ELEMENT_NODE) {
 						Element feature = (Element) f;
 						switch (feature.getTagName()) {
-						case "name":
-							candyType.setName(feature.getTextContent());
-							break;
-						case "energy":
-							candyType.setEnergy(feature.getTextContent());
-							break;
-						case "type":
-							candyType.setType(Type.valueOf(feature.getTextContent()));
-							break;
-						case "ingredients":
-							candyType
-									.setIngredients(analyseIngredients(feature));
-							break;
-						case "value":
-							candyType.setValue(analyseValue(feature));
-							break;
-						}
+							case "name":
+								candyType.setName(feature.getTextContent());
+								break;
+							case "energy":
+								candyType.setEnergy(Integer.parseInt(feature.getTextContent()));
+								break;
+							case "production":
+								candyType.setProduction(feature.getTextContent());
+								break;
+							case "ingridients":
+								candyType.setIngridients(analyseIngredients(feature));
+								break;
+							case "value":
+								candyType.setValue(analyseValue(feature));
+								break;
+							}
 					}
 				}
-				candyCollection.getCandy().add(candyType);
+				candyCollection.add(candyType);
 			}
 		}
 	}
 	
-	private Ingredients analyseIngredients(Element feature) {
-		Ingredients ingredients = new Ingredients();
+	private Ingridients analyseIngredients(Element feature) {
+		Ingridients ingredients = new Ingridients();
 		NodeList ingredList = feature.getChildNodes();
 		for (int k = 0; k < ingredList.getLength(); k++) {
 			Node in = ingredList.item(k);
 			if (in.getNodeType() == Node.ELEMENT_NODE) {
-				Element ingredient = (Element) in;
-				switch (ingredient.getTagName()) {
-				case "water":
-					BigDecimal water = new BigDecimal(ingredient
-							.getTextContent().replaceAll(",", ""));
-					ingredients.setWater(water);
-					break;
-				case "sugar":
-					BigDecimal sugar = new BigDecimal(ingredient
-							.getTextContent().replaceAll(",", ""));
-					ingredients.setSugar(sugar);
-					break;
-				case "fructose":
-					BigDecimal fructose = new BigDecimal(ingredient
-							.getTextContent().replaceAll(",", ""));
-					ingredients.setFructose(fructose);
-					break;
-				case "chocType":
-					ingredients.setChocType(ingredient.getTextContent());
-					break;
-				case "vanillin":
-					BigDecimal vanillin = new BigDecimal(ingredient
-							.getTextContent().replaceAll(",", ""));
-					ingredients.setVanillin(vanillin);
-					break;
-				}
+				Element ingridient = (Element) in;
+				switch (ingridient.getTagName()) {
+					case "water":
+						int water = Integer.parseInt(ingridient.getTextContent());
+						ingredients.setWater(water);
+						break;
+					case "sugar":
+						int sugar = Integer.parseInt(ingridient.getTextContent());
+						ingredients.setSugar(sugar);
+						break;
+					case "fructose":
+						int fructose = Integer.parseInt(ingridient.getTextContent());
+						ingredients.setFructose(fructose);
+						break;
+					}
 			}
 		}
 		return ingredients;
@@ -128,28 +123,25 @@ public class DOMParser {
 			if (v.getNodeType() == Node.ELEMENT_NODE) {
 				Element curValue = (Element) v;
 				switch (curValue.getTagName()) {
-				case "proteins":
-					BigDecimal proteins = new BigDecimal(curValue
-							.getTextContent().replaceAll(",", ""));
-					value.setProteins(proteins);
-					break;
-				case "fats":
-					BigDecimal fats = new BigDecimal(curValue.getTextContent()
-							.replaceAll(",", ""));
-					value.setFats(fats);
-					break;
-				case "carbohydrates":
-					BigDecimal carbohydrates = new BigDecimal(curValue
-							.getTextContent().replaceAll(",", ""));
-					value.setCarbohydrates(carbohydrates);
-					break;
-				}
+					case "protein":
+						int proteins = Integer.parseInt(curValue.getTextContent());
+						value.setProteins(proteins);
+						break;
+					case "fat":
+						int fats = Integer.parseInt(curValue.getTextContent());
+						value.setFats(fats);
+						break;
+					case "carbohydrate":
+						int carbohydrates = Integer.parseInt(curValue.getTextContent());
+						value.setCarbohydrates(carbohydrates);
+						break;
+					}
 			}
 		}
 		return value;
 	}
 	
-	public Candy getCandyCollection() {
+	public CandyCollection getCandyCollection() {
 		return candyCollection;
 	}
 

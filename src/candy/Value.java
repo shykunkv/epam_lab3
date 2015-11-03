@@ -43,6 +43,16 @@ public class Value {
 		this.carbohydrates = carbohydrates;
 	};
 	
-	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("\t\tProteins: " + this.proteins + "\n");
+		sb.append("\t\tFats: " + this.fats + "\n");
+		sb.append("\t\tCarbohydrates: " + this.carbohydrates + "\n");
+		
+		return sb.toString();
+	}
+		
 	
 }
