@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type='text/xsl' href='Candy.xsl'?>
+<tns:Candy xmlns:tns="myNamespace"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="myNamespace/Candy.xsd">
+
+	<candy production="Roshen">
+		<name>ladybug</name>
+		<energy>400</energy>
+		<type>CHOCWITHSTUF</type>
+		<ingredients>
+			<water>10</water>
+			<sugar>30</sugar>
+			<fructose>30</fructose>
+		</ingredients>
+		<value>
+			<proteins>300</proteins>
+			<fats>100</fats>
+			<carbohydrates>150</carbohydrates>
+		</value>
+	</candy>
+	
+	<candy production="AVK">
+		<name>RobinHood</name>
+		<energy>200</energy>
+		<type>CARAMEL</type>
+		<ingredients>
+			<water>30</water>
+			<sugar>50</sugar>
+			<fructose>20</fructose>
+			<chocType>none</chocType>
+			<vanillin>5</vanillin>
+		</ingredients>
+		<value>
+			<proteins>100</proteins>
+			<fats>70</fats>
+			<carbohydrates>90</carbohydrates>
+		</value>
+	</candy>
+	
+</tns:Candy>
+
