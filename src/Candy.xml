@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
-<collection>
-	<candy type = "TYPE3" id = "5">
+<collection xmlns:xs="myNamespace">
+	<candy type = "TYPE3" id = "id1">
 		<name>Name1</name>
 		<production>Roshen</production>
 		<energy>100</energy>
@@ -17,7 +17,7 @@
 		</value>
 	</candy>
 
-	<candy type = "TYPE2" id = "2">
+	<candy type = "TYPE2" id = "id2">
 		<name>Name2</name>
 		<production>AVK</production>
 		<energy>200</energy>
@@ -33,7 +33,7 @@
 		</value>
 	</candy>
 
-	<candy type = "TYPE2" id = "4">
+	<candy type = "TYPE2" id = "id4">
 		<name>Name2</name>
 		<production>AVK</production>
 		<energy>200</energy>
@@ -49,7 +49,7 @@
 		</value>
 	</candy>
 
-		<candy type = "TYPE2" id = "1">
+		<candy type = "TYPE2" id = "id0">
 		<name>Name2</name>
 		<production>AVK</production>
 		<energy>200</energy>

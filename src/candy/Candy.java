@@ -99,11 +99,11 @@ public class Candy implements Comparable {
 	@Override
 	public int compareTo(Object arg0) {
 		Candy candy = (Candy) arg0;
-		int left = Integer.parseInt(this.id);
-		int right = Integer.parseInt(candy.getId());
-		if (left > right) return 1;
-		else if (left < right) return -1;
-		else return 0;
+		
+		String left = this.id;
+		String right = candy.getId();
+		
+		return left.compareTo(right);
 	}
 	
 	

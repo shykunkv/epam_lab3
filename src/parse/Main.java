@@ -11,12 +11,13 @@ public class Main {
 		String XSD = "src/Candy.xsd";
 		String XSL = "src/Candy.xsl";
 		
-//		Validate validate = new Validate(filenameXML, filenameXSD);
-//		
-//		if (validate.isValid()) {
-//			System.out.println("XML is valid with this XSD");
-//		} else
-//			System.out.println("ERROR: XML is invalid");
+		
+		Validate validate = new Validate(XML, XSD);
+		
+		if (validate.isValid()) {
+			System.out.println("XML is valid with this XSD");
+		} else
+			System.out.println("ERROR: XML is invalid");
 		
 		//DOMParser dom = new DOMParser(filenameXML);
 		//dom.parse();
