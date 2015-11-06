@@ -16,18 +16,20 @@ public class Main {
 		
 		if (validate.isValid()) {
 			System.out.println("XML is valid with this XSD");
-		} else
+		} else {
 			System.out.println("ERROR: XML is invalid");
+			System.exit(0);
+		}
 		
-		//DOMParser dom = new DOMParser(filenameXML);
-		//dom.parse();
-		//CandyCollection candyCollection = dom.getCandyCollection();
-		//System.out.println(candyCollection.toString());
-		
-//		SAXPars sax = new SAXPars(filenameXML);
-//		sax.parse();
-//		CandyCollection candyCollection = sax.getCandyCollection();
+//		DOMParser dom = new DOMParser(XML);
+//		dom.parse();
+//		CandyCollection candyCollection = dom.getCandyCollection();
 //		System.out.println(candyCollection.toString());
+		
+		SAXPars sax = new SAXPars(XML);
+		sax.parse();
+		CandyCollection candyCollection = sax.getCandyCollection();
+		System.out.println(candyCollection.toString());
 		
 //		StAXParser stax = new StAXParser(filenameXML);
 //		stax.parse();
@@ -38,8 +40,8 @@ public class Main {
 		//Collections.sort(candyCollection.getCandyList());
 		//System.out.println(candyCollection.toString());
 		
-		XMLtoHTML html = new XMLtoHTML(XML, XSL);
-		html.transform();
+		//XMLtoHTML html = new XMLtoHTML(XML, XSL);
+		//html.transform();
 
 	}
 

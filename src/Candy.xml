@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 
-<collection xmlns:xs="myNamespace">
-	<candy type = "TYPE3" id = "id1">
+<collection>
+<candy type = "TYPE3" id = "id1">
 		<name>Name1</name>
-		<production>Roshen</production>
+		<production>prod1</production>
 		<energy>100</energy>
 		<ingridients>
 			<water>10</water>
@@ -16,10 +16,10 @@
 			<carbohydrate>100</carbohydrate>
 		</value>
 	</candy>
-
-	<candy type = "TYPE2" id = "id2">
+	
+		<candy type = "TYPE2" id = "id2">
 		<name>Name2</name>
-		<production>AVK</production>
+		<production>prod2</production>
 		<energy>200</energy>
 		<ingridients>
 			<water>20</water>
@@ -32,37 +32,37 @@
 			<carbohydrate>200</carbohydrate>
 		</value>
 	</candy>
-
-	<candy type = "TYPE2" id = "id4">
-		<name>Name2</name>
-		<production>AVK</production>
-		<energy>200</energy>
+	
+		<candy type = "TYPE3" id = "id3">
+		<name>Name3</name>
+		<production>prod3</production>
+		<energy>300</energy>
 		<ingridients>
-			<water>20</water>
-			<sugar>20</sugar>
-			<fructose>20</fructose>
+			<water>30</water>
+			<sugar>30</sugar>
+			<fructose>30</fructose>
 		</ingridients>
 		<value>
-			<protein>200</protein>
-			<fat>200</fat>
-			<carbohydrate>200</carbohydrate>
+			<protein>300</protein>
+			<fat>300</fat>
+			<carbohydrate>300</carbohydrate>
 		</value>
 	</candy>
-
-		<candy type = "TYPE2" id = "id0">
-		<name>Name2</name>
-		<production>AVK</production>
-		<energy>200</energy>
+	
+		<candy type = "TYPE1" id = "id0">
+		<name>Name4</name>
+		<production>prod4</production>
+		<energy>400</energy>
 		<ingridients>
-			<water>20</water>
-			<sugar>20</sugar>
-			<fructose>20</fructose>
+			<water>40</water>
+			<sugar>40</sugar>
+			<fructose>40</fructose>
 		</ingridients>
 		<value>
-			<protein>200</protein>
-			<fat>200</fat>
-			<carbohydrate>200</carbohydrate>
+			<protein>400</protein>
+			<fat>400</fat>
+			<carbohydrate>400</carbohydrate>
 		</value>
 	</candy>
-
+	
 </collection>

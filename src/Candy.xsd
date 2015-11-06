@@ -1,48 +1,15 @@
 <?xml version="1.0"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" >
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+			xmlns:cnd = "http://NamespaceTest.com/CandyType">
+
+<xs:import schemaLocation = "CandyType.xsd" namespace = "http://NamespaceTest.com/CandyType" />
 
 <xs:element name='collection'>
 	<xs:complexType>
 		<xs:sequence>
-			<xs:element name='candy' type='CandyType' minOccurs='0' maxOccurs='unbounded' />
+			<xs:element name='candy' type='cnd:CandyType' minOccurs='0' maxOccurs='unbounded' />
 		</xs:sequence>
 	</xs:complexType>	
 </xs:element>
-
-<xs:complexType name="CandyType">
-	<xs:sequence>
-		<xs:element name="name" type="xs:string"/>
-		<xs:element name="production" type="xs:string"/>
-		<xs:element name="energy" type="xs:positiveInteger"/>
-		<xs:element name="ingridients" type="IngridientsType"/>
-		<xs:element name="value" type="ValueType"/>
-	</xs:sequence>
-	<xs:attribute name='type' type='EnumType'/>
-	<xs:attribute name='id' type='xs:ID'/>
-</xs:complexType>	
-
-<xs:simpleType name="EnumType">
-  <xs:restriction base="xs:string">
-    <xs:enumeration value="TYPE1" />
-    <xs:enumeration value="TYPE2" />
-    <xs:enumeration value="TYPE3" />
-  </xs:restriction>
-</xs:simpleType>
-
-<xs:complexType name="IngridientsType">
-	<xs:sequence>
-		<xs:element name="water" type="xs:positiveInteger"/>
-		<xs:element name="sugar" type="xs:positiveInteger"/>
-		<xs:element name="fructose" type="xs:positiveInteger"/>
-	</xs:sequence>
-</xs:complexType>	
-
-<xs:complexType name="ValueType">
-	<xs:sequence>
-		<xs:element name="protein" type="xs:positiveInteger"/>
-		<xs:element name="fat" type="xs:positiveInteger"/>
-		<xs:element name="carbohydrate" type="xs:positiveInteger"/>
-	</xs:sequence>
-</xs:complexType>
 
 </xs:schema>
